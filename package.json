@@ -13,7 +13,8 @@
     "setup": "yarn install && yarn setup:frontend && yarn setup:backend",
     "dev": "yarn clear && concurrently \"cd frontend && yarn dev\" \"cd backend && yarn develop\"",
     "seed": "cd backend && yarn strapi import -f ../seed-data.tar.gz",
-    "repo:upstream": "git fetch upstream && git merge upstream/main"
+    "repo:upstream": "git fetch upstream && git merge upstream/main",
+    "copytypes": "node copyTypes.js"
   },
   "author": "Paul Bratslavsky",
   "license": "MIT",

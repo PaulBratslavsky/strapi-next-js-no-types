@@ -1,3 +1,6 @@
+// import our types
+import type { APIResponseCollection, APIResponseData } from "@/types/types";
+
 import qs from "qs";
 const query = qs.stringify({ populate: "*" });
 
@@ -13,20 +16,22 @@ async function getData() {
 }
 
 export default async function Home() {
-  const data = await getData();
+  // typescript will infer the type of `data` as `APIResponseCollection<"api::post.post">`
+  const data = (await getData()) as APIResponseCollection<"api::post.post">;
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        {data.data.map((post: any, index: string) => {
-          return <Card key={index} data={post} />;
+        {data.data.map((post: APIResponseData<"api::post.post">) => {
+          return <Card key={post.id} data={post} />;
         })}
       </div>
     </main>
   );
 }
 
-function Card({ data }: any) {
+// typescript will infer the type of `data` as `APIResponseData<"api::post.post">`
+function Card({ data }: { data: APIResponseData<"api::post.post"> }) {
   console.log(data, "############# STRAPI CARD DATA #############");
 
   const { title, description } = data.attributes;
