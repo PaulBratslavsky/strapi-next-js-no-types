@@ -1,4 +1,4 @@
-import type { Attribute, Common, Utils } from "@strapi/types";
+import type { Attribute, Common, Utils } from "@strapi/strapi";
 
 type IDProperty = { id: number };
 
@@ -41,7 +41,7 @@ type RelationValue<TAttribute extends Attribute.Attribute> =
             >,
             TRelationKind extends `${string}ToMany`
               ? Omit<APIResponseCollection<TTarget>, "meta">
-              : APIResponse<TTarget>
+              : APIResponse<TTarget> | null
           ]
         ],
         `TODO: handle other relation kind (${TRelationKind})`
@@ -54,7 +54,7 @@ type ComponentValue<TAttribute extends Attribute.Attribute> =
         Utils.Expression.If<
           TRepeatable,
           GetValues<TComponentUID>[],
-          GetValues<TComponentUID>
+          GetValues<TComponentUID> | null
         >
     : never;
 
@@ -74,8 +74,8 @@ type MediaValue<TAttribute extends Attribute.Attribute> =
   TAttribute extends Attribute.Media<infer _TKind, infer TMultiple>
     ? Utils.Expression.If<
         TMultiple,
-        APIResponseData<"plugin::upload.file">[],
-        APIResponseData<"plugin::upload.file">
+        APIResponseCollection<"plugin::upload.file">,
+        APIResponse<"plugin::upload.file"> | null
       >
     : never;
 
@@ -119,10 +119,12 @@ export interface APIResponseData<TContentTypeUID extends Common.UID.ContentType>
 }
 
 export interface APIResponseCollectionMetadata {
-  page: number;
-  pageSize: number;
-  pageCount: number;
-  total: number;
+  pagination: {
+    page: number;
+    pageSize: number;
+    pageCount: number;
+    total: number;
+  };
 }
 
 export interface APIResponse<TContentTypeUID extends Common.UID.ContentType> {
