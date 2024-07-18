@@ -48,6 +48,9 @@
         "DRAFT",
         "SCHEDULED"
       ]
+    },
+    "test": {
+      "type": "string"
     }
   }
 }

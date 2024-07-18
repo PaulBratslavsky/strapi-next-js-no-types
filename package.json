@@ -2,23 +2,27 @@
   "name": "strapi-next-typed",
   "version": "1.0.0",
   "description": "Strapi Next Typed Frontend",
+  "license": "MIT",
+  "author": "Paul Bratslavsky",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "frontend": "yarn dev --prefix ../frontend/",
     "backend": "yarn dev --prefix ../backend/",
     "clear": "cd frontend && rm -rf .next && rm -rf cache",
-    "setup:frontend": "cd frontend && yarn",
-    "setup:backend": "cd backend && yarn",
-    "setup": "yarn install && yarn setup:frontend && yarn setup:backend",
+    "copytypes": "node copyTypes.js",
     "dev": "yarn clear && concurrently \"cd frontend && yarn dev\" \"cd backend && yarn develop\"",
-    "seed": "cd backend && yarn strapi import -f ../seed-data.tar.gz",
+    "frontend": "yarn dev --prefix ../frontend/",
     "repo:upstream": "git fetch upstream && git merge upstream/main",
-    "copytypes": "node copyTypes.js"
+    "seed": "cd backend && yarn strapi import -f ../seed-data.tar.gz",
+    "setup": "yarn install && yarn setup:frontend && yarn setup:backend",
+    "setup:backend": "cd backend && yarn",
+    "setup:frontend": "cd frontend && yarn",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Paul Bratslavsky",
-  "license": "MIT",
   "dependencies": {
+    "@strapi/typescript-utils": "^4.25.3",
     "concurrently": "^8.2.1"
+  },
+  "devDependencies": {
+    "@strapi/strapi": "^4.25.3"
   }
 }

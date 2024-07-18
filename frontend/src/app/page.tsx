@@ -1,5 +1,5 @@
 // import our types
-import type { APIResponseCollection, APIResponseData } from "@/types/types";
+import type { APIResponseCollection, APIResponseData } from "@/types/strapi";
 
 import qs from "qs";
 const query = qs.stringify({ populate: "*" });
@@ -31,10 +31,11 @@ export default async function Home() {
 }
 
 // typescript will infer the type of `data` as `APIResponseData<"api::post.post">`
+// Look up types by content id "api::post.post"
 function Card({ data }: { data: APIResponseData<"api::post.post"> }) {
   console.log(data, "############# STRAPI CARD DATA #############");
 
-  const { title, description } = data.attributes;
+  const { title, description, test, content } = data.attributes;
   return (
     <a
       href="https://strapi.io"
@@ -44,6 +45,12 @@ function Card({ data }: { data: APIResponseData<"api::post.post"> }) {
     >
       <h2 className={`mb-3 text-2xl font-semibold`}>
         {title}{" "}
+        <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
+          -&gt;
+        </span>
+      </h2>
+      <h2 className={`mb-3 text-2xl font-semibold`}>
+        {test}{" "}
         <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
           -&gt;
         </span>
